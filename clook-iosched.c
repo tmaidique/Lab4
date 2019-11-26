@@ -1,7 +1,7 @@
 /*
  *   elevator clook
  *
- *   Thalia Maidique PID: 5827633
+ *   Thalia Maidique PID: **********
  *   COP4610 Lab 4
  *
  *   Only edited the clook_add_request and clook_dispatch functions
