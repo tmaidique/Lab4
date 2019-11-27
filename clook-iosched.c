@@ -30,14 +30,14 @@ static void clook_merged_requests(struct request_queue *q, struct request *rq,
 static int clook_dispatch(struct request_queue *q, int force)
 {
 	struct clook_data *nd = q->elevator->elevator_data;
-
+	char readwrite;
 	if (!list_empty(&nd->queue)) {
 		struct request *rq;
 		rq = list_entry(nd->queue.next, struct request, queuelist);
 		list_del_init(&rq->queuelist);
 		elv_dispatch_sort(q, rq);
 
-		char readwrite = (rq_data_dir(rq) & REQ_WRITE) ? 'W' : 'R';
+		readwrite = (rq_data_dir(rq) & REQ_WRITE) ? 'W' : 'R';
 		printk("[CLOOK] dsp %c %lu\n", readwrite, blk_rq_pos(rq));
 
 		return 1;
@@ -53,7 +53,7 @@ static void clook_add_request(struct request_queue *q, struct request *rq)
 {
 	struct clook_data *nd = q->elevator->elevator_data;
 	struct list_head *cur = NULL;
-
+	char readwrite;
 	/* This loop puts the request in the right order by comparing physical locations */
 	list_for_each(cur, &nd->queue) {
 		if(rq_end_sector(list_entry(cur, struct request, queuelist)) > rq_end_sector(rq)) {
@@ -62,7 +62,7 @@ static void clook_add_request(struct request_queue *q, struct request *rq)
 	}
 	list_add_tail(&rq->queuelist, cur);
 
-	char readwrite = (rq_data_dir(rq) & REQ_WRITE) ? 'W' : 'R';
+	readwrite = (rq_data_dir(rq) & REQ_WRITE) ? 'W' : 'R';
 	printk("[CLOOK] add %c %lu\n", readwrite, blk_rq_pos(rq));
 }
 
