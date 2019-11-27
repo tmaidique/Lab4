@@ -5,7 +5,7 @@ diff -rupN linux-2.6.36/block/clook-iosched.c linux-2.6.36-dev/block/clook-iosch
 +/*
 + *   elevator clook
 + *
-+ *   Thalia Maidique PID:5827633
++ *   Thalia Maidique PID:***********
 + *   COP4610 LAB 4
 + *
 + *   Only edited the clook_add_request and clook_dispatch functions
